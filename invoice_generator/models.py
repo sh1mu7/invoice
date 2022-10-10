@@ -1,3 +1,6 @@
+import datetime
+from random import random
+
 from django.db import models
 from django.urls import reverse
 
@@ -11,10 +14,30 @@ class BaseModel(models.Model):
         abstract = True
 
 
+def increment_invoice_number():
+    last_invoice = ClientInfo.objects.all().order_by('id').last()
+    if not last_invoice:
+        return 'INV_XX_01047'
+    invoice_no = last_invoice.invoice_no
+    invoice_int = int(invoice_no.split('_')[-1])
+    new_invoice_int = invoice_int + 1
+    new_invoice_no = 'INV_XX_0' + str(new_invoice_int)
+    return new_invoice_no
+
+
 class ClientInfo(BaseModel):
+    # STATUS_CHOICES = (
+    #     ('Paid', 'Paid'),
+    #     ('Overdue', 'Overdue'),
+    #     ('Cancelled', 'Cancelled')
+    # )
     name = models.CharField(max_length=200, verbose_name="Client's Name", null=False, blank=False)
     phone = models.CharField(max_length=20, null=False, blank=False)
     email = models.EmailField(null=False, blank=False)
+    invoice_no = models.CharField(max_length=500, editable=False,
+                                  default=increment_invoice_number, null=True, blank=True)
+
+    # status = models.CharField(max_length=10, choices=STATUS_CHOICES, null=False, blank=False)
 
     class Meta:
         db_table = 'Client_Information'

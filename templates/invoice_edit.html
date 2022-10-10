@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}
+    Update
+{% endblock %}
+{% block main %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="card mt-2">
+            <div class="card-header">
+                <h3 class="text-center">Update Invoice</h3>
+            </div>
+            <div class="row m-3">
+                <h5 class="text-info"> Client Information</h5>
+            </div>
+            <div class="row mb-4 m-2">
+                {% for form in forms.visible_fields %}
+                    <div class="col">
+                        <div class="form-outline">
+                            {{ form|add_class:'form-control' }}
+                            <label class="form-label" for="{{ form.id_for_label }}">{{ form.label }}</label>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    <div class="card mt-2">
+        <div class="row m-3">
+            <h5 class="text-info"> Service Information</h5>
+        </div>
+        {{ formset.non_form_errors }}
+        {{ formset.management_form }}
+        <div class="row m-2 item-form">
+            {% for form in formset %}
+                    {% for field in form.visible_fields %}
+                    <div class="col">
+                        <div class="form-outline">
+
+                            {{ field|add_class:'form-control' }}
+                            <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                {% endfor %}
+        </div>
+        <button type="submit" class="px-5 m-3 btn btn-outline-info">Update</button>
+    </div>
+    </form>
+{% endblock %}
+{% block script %}
+
+    <script>
+        let itemForm = document.querySelectorAll('.item-form')
+        let formNum = itemForm.length - 1
+        console.log(formNum)
+    </script>
+{% endblock %}
+
+
+
+
+
+

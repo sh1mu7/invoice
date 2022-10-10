@@ -15,7 +15,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'invoice_generator.apps.InvoiceGeneratorConfig'
+    'invoice_generator.apps.InvoiceGeneratorConfig',
+    'widget_tweaks'
 ]
 
 MIDDLEWARE = [

@@ -13,7 +13,8 @@ class ClientInfoForms(forms.ModelForm):
 class ServiceForms(forms.ModelForm):
     class Meta:
         model = Service
-        fields = '__all__'
+        exclude = ('client', 'id'),
 
 
-ServiceFormset = inlineformset_factory(ClientInfo, Service, fields=('name', 'quantity', 'price'), extra=1)
+ServiceFormset = inlineformset_factory(ClientInfo, Service, fields=['name', 'quantity', 'price'],
+                                       extra=1, can_delete=False)

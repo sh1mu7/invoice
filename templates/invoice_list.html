@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}
+    List
+{% endblock %}
+{% block main %}
+    <div class="card mt-2">
+        <div class="card-header">
+            <h1 class="text-center text-primary">Invoice List</h1>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover  shadow-3-strong">
+                <thead>
+                <tr>
+                    <th scope="col" class="text-md">Invoice ID</th>
+                    <th scope="col" class="text-md">Created on</th>
+                    <th scope="col" class="text-md">Invoice to</th>
+                    <th scope="col" class="text-md">Status</th>
+                    <th scope="col" class="text-md">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for object in objects %}
+                    <tr>
+                        <th scope="row">#{{ object.invoice_no }}</th>
+                        <td class="text-center">{{ object.created_at.date }}</td>
+                        <td>{{ object.name }}</td>
+                        <td>@mdo</td>
+                        <td>
+                            <a href="{% url 'invoice:invoice_edit' pk=object.id %}"><i class="bi bi-pencil text-info text-lg-start"></i></a>
+                            <a href="{% url 'invoice:invoice_delete' pk=object.id %}"><i class="bi bi-trash text-danger" style="font-size: large"></i></a>
+                            <a href=""><i class="bi bi-info text-danger" style="font-size: large"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                {% for object in objects %}
+                    <tr>
+                        <th scope="row"># {{ object.invoice_no }} </th>
+                        <td class="text-center">{{ object.created_at.date }}</td>
+                        <td>{{ object.name }}</td>
+                        <td>@mdo</td>
+                        <td>
+                            <a href="{% url 'invoice:invoice_edit' pk=object.id %}"><i class="bi bi-pencil text-info text-lg-start"></i></a>
+                            <a href="{% url 'invoice:invoice_delete' pk=object.id %}"><i class="bi bi-trash text-danger" style="font-size: large"></i></a>
+                            <a href=""><i class="bi bi-info text-danger" style="font-size: large"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <div class="card mt-2">
+
+        <div class="card-body ">
+
+            <div class="row">
+                <h1 class=" text-center bg-dark text-white inv_c">Invoice</h1>
+                <div class="col-4">
+                    <p class=" text-center  inv_c">{{ objects.name }}</p>
+                </div>
+               <div class="col-4">
+                    <p class=" text-center  inv_c">{{ objects.phone }}</p>
+                </div>
+                <div class="col-4">
+                    <p class=" text-center  inv_c">{{ objects.email }}</p>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-4">
+                    <p class=" text-center  inv_c">{{ objects.name }}</p>
+                </div>
+               <div class="col-4">
+
+                </div>
+                <div class="col-4">
+                    <p class=" text-center  inv_c">{{ objects.email }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
