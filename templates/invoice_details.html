@@ -1,36 +1,113 @@
-{% extends 'base.html' %}
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://unpkg.com/@webpixels/css/dist/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <title>Document</title>
+</head>
+<body class="d-flex flex-column justify-content-between">
 
-{% block main %}
-    <div class="card mt-2">
+<div class="container">
+    <div class="row">
+        <div class="col-sm ">
+            <img height="60px" width="60px" src="{% static 'assets/img/privateye.svg' %}" alt="logo">
+        </div>
 
-        <div class="card-body ">
+    </div>
+    <div class="row mt-7">
+        <div class="col-sm ">
+            <p class="text-dark text-md text-lg client_name mb-3">Client Name</p>
+            <p class="text-dark text-sm">Invoice Date: <span class="bold">May 24th, 2022</span></p>
+            <p class="text-dark text-sm">Invoice No: <span class="bold">INV_01050</span></p>
+        </div>
+        <div class="col-sm text-end">
+            <p class="text-dark text-sm bold">Privateyebd</p>
+            <p class="text-dark text-sm">West Dhanmondi</p>
+            <p class="text-dark text-sm ">Dhanmondi-27,Dhaka-1209</p>
+            <p class="text-dark text-sm ">contact@privateyebd.com</p>
+        </div>
 
-            <div class="row">
-                <h1 class=" text-center bg-dark text-white inv_c">Invoice</h1>
-                <div class="col-4">
-                    <p class=" text-center  inv_c">{{ objects.name }}</p>
-                </div>
-               <div class="col-4">
-                    <p class=" text-center  inv_c">{{ objects.phone }}</p>
-                </div>
-                <div class="col-4">
-                    <p class=" text-center  inv_c">{{ objects.email }}</p>
-                </div>
-            </div>
-            <div class="row">
+    </div>
+    <div class="row m_top mb-10">
+        <div class="col">
+            <table class="table mb-10">
+                <thead>
+                <tr>
+                    <th scope="col">QTY</th>
+                    <th scope="col">DESCRIPTION</th>
+                    <th scope="col" class="text-end">PRICE</th>
+                    <th scope="col" class="text-center">SUBTOTAL</th>
+                </tr>
+                </thead>
+                <tbody class="text-dark">
+                <tr>
+                    <th scope="row">2</th>
+                    <td>CMS with security patch and AI</td>
+                    <td class="text-end">$15.00</td>
+                    <td class="text-center bold">$30</td>
+                </tr>
 
-                <div class="col-4">
-                    <p class=" text-center  inv_c">{{ objects.name }}</p>
-                </div>
-               <div class="col-4">
-
-                </div>
-                <div class="col-4">
-                    <p class=" text-center  inv_c">{{ objects.email }}</p>
-                </div>
-            </div>
+                </tbody>
+            </table>
         </div>
     </div>
 
+    <div class="row m_top ">
+        <div class="col">
+            <table class="table mb-10">
+                <thead>
+                <tr>
+                    <th scope="col" class="text-sm">Payment Info</th>
+                    <th scope="col" class="text-sm">Due By</th>
+                    <th scope="col" class="text-end text-sm">Total Due</th>
+                </tr>
+                </thead>
+                <tbody class="text-dark ">
+                <tr>
+                    <th class="text-sm">
+                        <p>Account: <span class="text-md  rounded">4384734</span></p>
+                        <p>TrxId: <span class="text-md  rounded">d4sfn4s3</span></p>
 
-{% endblock %}
+                    </th>
+                    <td class="text-lg text-w">May 30th, 2022</td>
+                    <td class="text-lg text-end text-danger">$105.00</td>
+
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<div class="container">
+    <footer>
+        <div class="row">
+            <div class="col-6">
+
+                <div class="row">
+                    <p class="px-10">Pay within 10 days and save 2%</p>
+                </div>
+            </div>
+            <div class="col-6">
+
+                <div class="row">
+                    <p class="text-end f_text">contact@privateyebd.com</p>
+                    <p class="text-end f_text">  www.privateyebd.com</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+{#<script>#}
+{#    let f_height = document.querySelector("#footer").offsetHeight;#}
+{#    console.log(f_height);#}
+{#</script>#}
+</body>
+</html>

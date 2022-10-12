@@ -67,10 +67,10 @@ def invoice_delete(request, pk):
     return redirect('invoice:invoice_list')
 
 
-def invoice_details(request,pk):
+def invoice_details(request, pk):
     context = {
         'objects': ClientInfo.objects.get(id=pk),
-        'service':Service.objects.get(client_id=pk)
+        'service':Service.objects.filter(client_id__exact=pk)
 
     }
     return render(request, 'invoice_details.html', context)

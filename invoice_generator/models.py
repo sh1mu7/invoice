@@ -17,11 +17,11 @@ class BaseModel(models.Model):
 def increment_invoice_number():
     last_invoice = ClientInfo.objects.all().order_by('id').last()
     if not last_invoice:
-        return 'INV_XX_01047'
+        return 'INV_1047'
     invoice_no = last_invoice.invoice_no
     invoice_int = int(invoice_no.split('_')[-1])
     new_invoice_int = invoice_int + 1
-    new_invoice_no = 'INV_XX_0' + str(new_invoice_int)
+    new_invoice_no = 'INV_0' + str(new_invoice_int)
     return new_invoice_no
 
 
