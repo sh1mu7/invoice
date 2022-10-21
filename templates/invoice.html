@@ -1,0 +1,149 @@
+<!doctype html>
+{% load static %}
+{% load humanize %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}" type="text/css">
+    <title>Document</title>
+</head>
+<body class="d-flex flex-column justify-content-between">
+
+<div class="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary font-code">
+    <!-- Vertical Navbar -->
+    <!-- Main content -->
+    <div class="h-screen flex-grow-1 overflow-y-lg-auto">
+
+        <!-- Main -->
+        <main class="py-6 bg-surface-secondary">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-7 mx-auto">
+                        <!-- Profile picture -->
+                        <div class="card shadow border-0 mt-4 mb-10">
+                            <div class="card-header">
+                                <h1 class="text-center">INVOICE {{ tax_calculator }}</h1>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-5">
+                                    <p class="">DATE:  {{ Objects.created_at|date:"d-M-Y" }}</p>
+                                    <p>INVOICE No: {{ Objects.invoice_no }}</p>
+                                </div>
+
+                                <div class="mb-5">
+                                    <div class="bg-shade-primary" style="width: 300px">
+                                        <p class="text-white mx-3 font-bold">BILL TO</p>
+                                    </div>
+                                    <p class="text-dark text-sm font-bold"> Masudur Rahman
+                                    </p>
+                                    <p class="text-dark text-sm">Ghilakandi, Middle para,
+                                    </p>
+                                    <p class="text-dark text-sm ">Katiadi, Kishorganj-2330</p>
+                                    <p class="text-dark text-sm ">Mob: 01924-511503
+                                    </p>
+                                </div>
+
+                                <div class="mb-5">
+
+                                    <div class="">
+                                        <table class="table table-hover">
+                                            <thead class="bg-shade-primary text-white w-100">
+                                            <tr>
+                                                <th class="font-bold text-center" scope="col">DESCRIPTION</th>
+                                                <th class="font-bold text-center" scope="col">TAXED</th>
+                                                <th class="font-bold text-center" scope="col">AMOUNT</th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            {% for service in Services %}
+                                                <tr>
+                                                    <td>
+                                                        <p class="text-dark bg-soft-dark p-1 bg-soft-dark">{{ service.description }}</p>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <p class="text-dark bg-soft-dark p-1 ">
+                                                            {{ service.taxed }}
+                                                        </p>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <p class="text-dark  bg-soft-dark p-1 ">{{ service.amount|intcomma }}</p>
+                                                    </td>
+                                                </tr>
+
+                                            {% endfor %}
+
+
+
+                                            <tr>
+                                                <td class="position-relative">
+                                                    <p class="text-center position-absolute top-0">Total Payable is Taka
+                                                        {{ subtotal_in_word|upper }} only.</p>
+                                                    <div class="card mt-5">
+                                                        <div class="bg-shade-primary ">
+                                                            <p class=" text-white">OTHER COMMENTS</p>
+                                                        </div>
+                                                        <div class="card-body border border-dark border-2">
+
+                                                            <ol>
+                                                                <li>You can pay us through Digital Platform</li>
+                                                                <li>For TDS Use TIN No- 374619938532, Zone-12,
+                                                                    Circle-256
+                                                                </li>
+                                                                <li>If Tax Deducted at Source please e-mail the
+                                                                    Chalan.
+                                                                </li>
+                                                            </ol>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td colspan="5" class="text-end ">
+                                                    <p class="text-dark bg-soft-dark p-1 m-1 ">Subtotal <span
+                                                            style="margin-left: 80px">{{ subtotal }}</span></p>
+                                                    <p class="text-dark bg-soft-dark p-1 m-1 ">Taxable <span
+                                                            style="margin-left: 80px"></span></p>
+                                                    <p class="text-dark bg-soft-dark p-1 m-1 ">Tax rate <span
+                                                            style="margin-left: 80px">{{ Objects.vat_calculate }}</span></p>
+                                                    <p class="text-dark bg-soft-dark p-1 m-1 ">TDS <span
+                                                            style="margin-left: 80px">{{ total|intcomma }}</span></p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="">
+                                                    <p class="text-start">any questions about this invoice please
+                                                        contact</p>
+                                                    <p class="text-start text-dark font-bold">Avijit Mondol</p>
+                                                    <p class="text-start text-dark ">Advocate</p>
+                                                    <p class="text-start text-dark ">
+                                                        Mob: {{ Objects.phone }}</p>
+                                                     <p class="text-start text-dark ">
+                                                        Email: {{ Objects.email }}</p>
+                                                </td>
+
+                                            </tr>
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- Form -->
+
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+</body>
+</html>
