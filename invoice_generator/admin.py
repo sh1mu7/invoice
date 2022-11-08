@@ -1,7 +1,10 @@
 from django.contrib import admin
 
 from invoice_generator.models import ClientInfo
+from django.apps import apps
 
-# Register your models here.
+models = apps.get_models()
 
-admin.site.register(ClientInfo)
+for model in models:
+    if not admin.site.is_registered(model):
+        admin.site.register(model)

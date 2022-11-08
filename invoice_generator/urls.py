@@ -11,7 +11,7 @@ urlpatterns = [
     path('invoice_edit/<int:pk>', invoice_edit, name='invoice_edit'),
     path('invoice_details/<int:pk>', invoice_details, name='invoice_details'),
     path('invoice_delete/<int:pk>', invoice_delete, name='invoice_delete'),
-    path('export-invoice/<int:pk>', export_pdf, name='invoice')
+    path('export-invoice/<int:pk>', export_pdf, name='pdf')
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

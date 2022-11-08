@@ -41,14 +41,14 @@ def invoice_create(request):
         if forms.is_valid() and formset.is_valid():
             client = forms.save(commit=False)
             client.save()
-            a = 0
+            temp = 0
             for form in formset:
                 service = form.save(commit=False)
                 service.client = client
-                a += service.amount
-                client.total_amount = a
-                client.save()
+                temp += service.amount
+                client.total_amount = temp
                 service.save()
+                client.save()
         return redirect('invoice:create_invoice')
 
     context = {
@@ -100,26 +100,26 @@ def invoice_details(request, pk):
     context = {
         'Objects': ClientInfo.objects.get(id=pk),
         'Services': Service.objects.filter(client_id__exact=pk),
-        'subtotal': Service.objects.filter(client_id__exact=pk),
-        # 'total':Service.objects.filter(client_id__exact=pk).aggregate(Sum('price'))['price__sum']
-
+        'subtotal': Service.objects.filter(client_id__exact=pk).aggregate(Sum('amount'))['amount__sum'],
+        'subtotal_in_word': num2words(
+            Service.objects.filter(client_id__exact=pk).aggregate(Sum('amount'))['amount__sum'])
     }
     return render(request, 'invoice_details.html', context)
 
 
 def export_pdf(request, pk):
-    subtotal_in_word = num2words(Service.objects.filter(client_id__exact=pk).aggregate(Sum('amount'))['amount__sum'])
-    tax_amount = ClientInfo.objects.get(id=pk).tax_amount
-    print(tax_amount)
     context = {
         'Objects': ClientInfo.objects.get(id=pk),
         'Services': Service.objects.filter(client_id__exact=pk),
         'subtotal': Service.objects.filter(client_id__exact=pk).aggregate(Sum('amount'))['amount__sum'],
-        'subtotal_in_word': subtotal_in_word,
+        'subtotal_in_word': num2words(
+            Service.objects.filter(client_id__exact=pk).aggregate(Sum('amount'))['amount__sum'])
     }
     html_string = render_to_string('invoice.html', context)
-
     html = HTML(string=html_string)
-    result = os.path.join('', 'invoice.pdf')
-    # html.write_pdf(result, stylesheets=['/home/sh1mu7/Desktop/projects/invoice/static/assets/css/style.css'])
+    queryset = ClientInfo.objects.filter(id=pk)
+    for query in queryset:
+        result = os.path.join(BASE_DIR + '/media/invoice', query.invoice_no + '.pdf')
+        html.write_pdf(result, stylesheets=['/home/sh1mu7/Desktop/projects/invoice/static/assets/css/style.css'])
+
     return render(request, 'invoice.html', context)

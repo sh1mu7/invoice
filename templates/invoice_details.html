@@ -1,133 +1,189 @@
 <!doctype html>
 {% load static %}
+{% load humanize %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://unpkg.com/@webpixels/css/dist/index.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'assets/css/webpixel.css' %}" type="text/css">
+
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}" type="text/css">
     <title>Document</title>
 </head>
 <body class="d-flex flex-column justify-content-between">
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm ">
-            <img height="60px" width="60px" src="{% static 'assets/img/privateye.svg' %}" alt="logo">
-        </div>
+<div class="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary font-code">
+    <!-- Vertical Navbar -->
+    <!-- Main content -->
+    <div class="h-screen flex-grow-1 overflow-y-lg-auto">
 
-    </div>
-    <div class="row mt-7">
-        <div class="col-sm ">
-            <p class="text-dark text-md text-lg client_name mb-3">Client Name</p>
-            <p class="text-dark text-sm">Invoice Date: <span
-                    class="bold">{{ Objects.created_at|date:"M dS, Y" }} </span></p>
-            <p class="text-dark text-sm">Invoice No: <span class="bold">{{ Objects.invoice_no }}</span></p>
-            <h1 class="text-dark text-sm">Invoice No: <span class="bold">{{ Objects.vat_calculate }}</span></h1>
-        </div>
-        <div class="col-sm text-end">
-            <p class="text-dark text-sm bold">Privateyebd</p>
-            <p class="text-dark text-sm">West Dhanmondi</p>
-            <p class="text-dark text-sm ">Dhanmondi-27,Dhaka-1209</p>
-            <p class="text-dark text-sm ">contact@privateyebd.com</p>
-        </div>
-
-    </div>
-    <div class="row m_top mb-10">
-        <div class="col">
-            <table class="table mb-10">
-                <thead>
-                <tr>
-                    <th scope="col">DESCRIPTION</th>
-                    <th scope="col" class="text-end">TAXED</th>
-                    <th scope="col" class="text-end">AMOUNT</th>
-                </tr>
-                </thead>
-                <tbody class="text-dark">
-                {% for service in Services %}
-                    <tr>
-                        <td>{{ service.description }}</td>
-                        <td  >
-                            <p class="text-end">{{ service.taxed }}</p>
-                        </td>
-                        <td class="text-end bold">
-                            <span class="bold">৳</span> <span id="{{ service.id }}">{{ service.amount }}</span></td>
-                    </tr>
-                {% endfor %}
-
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <div class="row m_top ">
-        <div class="col">
-            <table class="table mb-10">
-                <thead>
-                <tr>
-                    <th scope="col" class="text-sm">Payment Info</th>
-                    <th scope="col" class="text-sm">Due By</th>
-                    <th scope="col" class="text-end text-sm">Total Due</th>
-                </tr>
-                </thead>
-                <tbody class="text-dark ">
-                <tr>
-                    <th class="text-sm">
-                        <p>Account: <span class="text-md  rounded">4384734</span></p>
-                        <p>TrxId: <span class="text-md  rounded">d4sfn4s3</span></p>
-
-                    </th>
-                    <td class="text-lg text-w">May 30th, 2022</td>
-                    <td class="text-lg text-end text-danger">$105.00</td>
-
-                </tr>
-
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-</div>
-<div class="container">
-    <footer>
-        <div class="row">
-            <button class="btn-outline-dark">Download</button>
-        </div>
-        <div class="row">
-            <div class="col-6">
-
+        <!-- Main -->
+        <main class="py-6 bg-surface-secondary">
+            <div class="container-fluid">
                 <div class="row">
-                    <p class="px-10">Pay within 10 days and save 2%</p>
+                    <div class="col-xl-7 mx-auto">
+                        <!-- Profile picture -->
+                        <div class="card shadow border-0 mt-4 mb-10">
+                            <div class="card-header">
+                                <h1 class="text-center">INVOICE</h1>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-5">
+                                    <div class="row d-flex ">
+                                        <div class="col-6">
+                                            <div class="bg-shade-primary" style="width: 300px">
+                                                <p class="text-white mx-3 font-bold">BILL TO</p>
+                                            </div>
+                                            <p class="text-dark text-sm font-bold"> {{ Objects.name }}
+                                            </p>
+                                            <p class="text-dark text-sm">{{ Objects.address }}
+                                            </p>
+
+                                            <p class="text-dark text-sm ">Mob: {{ Objects.phone }}
+                                            </p>
+                                        </div>
+                                        <div class="col-6 text-center">
+                                            <p class="">DATE: {{ Objects.created_at|date:"d-M-Y" }}</p>
+                                            <p>INVOICE No: {{ Objects.invoice_no }}</p>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-5">
+
+                                    <div class="">
+                                        <table class="table table-hover">
+                                            <thead class="bg-shade-primary text-white w-100">
+                                            <tr>
+                                                <th class="font-bold text-center" scope="col">DESCRIPTION</th>
+                                                <th class="font-bold text-center" scope="col">TAXED</th>
+                                                <th class="font-bold text-center" scope="col">AMOUNT</th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            {% for service in Services %}
+                                                <tr>
+                                                    <td>
+                                                        <p class="text-dark bg-soft-dark p-1 bg-soft-dark">{{ service.description }}</p>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        {% if service.taxed is None %}
+                                                            <p class="text-dark bg-soft-dark p-1 ">
+                                                                0
+                                                            </p>
+                                                        {% else %}
+                                                            <p class="text-dark bg-soft-dark p-1 ">
+                                                                {{ service.taxed }}
+                                                            </p>
+                                                        {% endif %}
+
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <p class="text-dark  bg-soft-dark p-1 ">{{ service.amount|intcomma }}</p>
+                                                    </td>
+                                                </tr>
+
+                                            {% endfor %}
+
+
+
+                                            <tr>
+                                                <td class="position-relative">
+                                                    <p class="text-center position-absolute top-0">Total Payable is Taka
+                                                        <span class="font-bold">{{ subtotal_in_word|upper }}</span>
+                                                        only.</p>
+                                                    <div class="card mt-5">
+                                                        <div class="bg-shade-primary ">
+                                                            <p class=" text-white">OTHER COMMENTS</p>
+                                                        </div>
+                                                        <div class="card-body border border-dark border-2">
+
+                                                            <ol>
+                                                                <li>You can pay us through Digital Platform</li>
+                                                                <li>For TDS Use TIN No- 374619938532, Zone-12,
+                                                                    Circle-256
+                                                                </li>
+                                                                <li>If Tax Deducted at Source please e-mail the
+                                                                    Chalan.
+                                                                </li>
+                                                            </ol>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td colspan="5" class="text-end ">
+                                                    <p class="text-dark bg-soft-dark p-1 m-1 ">Subtotal <span
+                                                            style="margin-left: 80px">{{ subtotal }}</span></p>
+                                                    <p class="text-dark bg-soft-dark p-1 m-1 ">Taxable <span
+                                                            style="margin-left: 80px">-</span>
+                                                    </p>
+                                                    <p class="text-dark bg-soft-dark p-1 m-1 ">Tax rate <span
+                                                            style="margin-left: 80px">
+                                                        {% if Objects.tax_amount is None %}
+                                                            0
+                                                        {% else %}
+                                                            {{ Objects.tax_amount }}
+                                                        {% endif %}
+                                                        %</span>
+                                                    </p>
+                                                    {% if Objects.tax_calculate.0 is None %}
+                                                        <p class="text-dark bg-soft-dark p-1 m-1 ">TDS <span
+                                                                style="margin-left: 80px">0</span>
+                                                        </p>
+                                                    {% else %}
+                                                        <p class="text-dark bg-soft-dark p-1 m-1 ">TDS <span
+                                                                style="margin-left: 80px">{{ Objects.tax_calculate.0 }}</span>
+                                                        </p>
+                                                    {% endif %}
+                                                    {% if Objects.tax_calculate.1 is None %}
+                                                        <p class="text-dark bg-soft-dark p-1 m-1 font-bold border-dark border-3 ">
+                                                            Total <span
+                                                                style="margin-left: 80px">{{ Objects.total_amount }}</span>
+                                                        </p>
+                                                    {% else %}
+                                                        <p class="text-dark bg-soft-dark p-1 m-1 font-bold border-dark border-3 ">
+                                                            Total <span
+                                                                style="margin-left: 80px">{{ Objects.tax_calculate.1 }}</span>
+                                                        </p>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="">
+                                                    <p class="text-start">any questions about this invoice please
+                                                        contact</p>
+                                                    <p class="text-start text-dark font-bold">Avijit Mondol</p>
+                                                    <p class="text-start text-dark ">Advocate</p>
+                                                    <p class="text-start text-dark ">
+                                                        Mob: {{ Objects.phone }}</p>
+                                                    <p class="text-start text-dark ">
+                                                        Email: {{ Objects.email }}</p>
+                                                </td>
+
+                                            </tr>
+
+
+                                            </tbody>
+                                        </table>
+                                        <a class="btn btn-outline-dark" href="{% url 'invoice:pdf' pk=Objects.id %}">
+                                            PDF</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- Form -->
+
+
+                    </div>
                 </div>
             </div>
-            <div class="col-6">
-
-                <div class="row">
-                    <p class="text-end f_text">contact@privateyebd.com</p>
-                    <p class="text-end f_text"> www.privateyebd.com</p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-{{ total }}
-
-
+        </main>
+    </div>
 </div>
-
-<script>
-    let price
-    let subtotal = 0
-    {% for Service in Services %}
-        price = parseInt(document.getElementById("{{ Service.id }}").innerHTML)
-        subtotal = subtotal + price
-
-    {% endfor %}
-    console.log(subtotal)
-
-
-</script>
 </body>
 </html>

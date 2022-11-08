@@ -1,8 +1,6 @@
-import datetime
-from random import random
-
 from django.db import models
-from django.db.models import Sum
+from django.db.models import signals
+from django.dispatch import receiver
 from django.urls import reverse
 
 
@@ -18,7 +16,7 @@ class BaseModel(models.Model):
 def increment_invoice_number():
     last_invoice = ClientInfo.objects.all().order_by('id').last()
     if not last_invoice:
-        return 'INV_1047'
+        return 'INV_01047'
     invoice_no = last_invoice.invoice_no
     invoice_int = int(invoice_no.split('_')[-1])
     new_invoice_int = invoice_int + 1
@@ -43,8 +41,22 @@ class ClientInfo(BaseModel):
 
     @property
     def vat_calculate(self):
-        if self.total_amount is not None:
-            return self.vat_amount * self.total_amount
+        if self.vat_amount is None:
+            return 0
+        else:
+            vat_payment = (self.total_amount * self.vat_amount) / 100
+            vat_applied = self.total_amount + (self.total_amount * self.vat_amount) / 100
+            return vat_payment, vat_applied
+
+    @property
+    def tax_calculate(self):
+        if self.tax_amount is None:
+            return self.total_amount
+        else:
+            tax_applied = self.total_amount - (self.total_amount * self.tax_amount) / 100
+            tds = (self.total_amount * self.tax_amount) / 100
+            return tds, tax_applied
+
 
     def get_absolute_url(self):
         return reverse("client_details", args=[str(self.id)])
@@ -62,13 +74,10 @@ class Service(BaseModel):
     class Meta:
         db_table = 'Service'
 
-    @property
-    def full_name(self):
-        return self.client.name
-
-    @property
-    def tax_calculator(self):
-        return None
-
     def __str__(self):
         return self.description
+
+
+@receiver(signals.post_save, sender=Service)
+def create_service(sender, instance, created, **kwargs):
+    print(ClientInfo.pk)
